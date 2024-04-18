@@ -1,11 +1,17 @@
 import React from "react";
-// import Signin from "./components/signin/Signin";
-import Login from "./components/Login.jsx/Login";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from "./components/Login/Login";
+import Dashboard from "./components/DashBoard/Dashboard";
+import AllIndex from "./components/AllIndex";
+
 function App() {
   return (
-    <div>     
-      <Login />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/allindex" element={<AllIndex />} />
+      </Routes>
+    </Router>
   );
 }
 
