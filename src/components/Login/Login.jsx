@@ -13,7 +13,7 @@ const Login = () => {
         // Check if email and password match the specific credentials
         if (formData.email === 'keerthana@gmail.com' && formData.password === '123456') {
             // Navigate to /allIndex if credentials are correct
-            history('/allindex');
+            history('/home');
         } else {
             // Show an alert for incorrect email or password  
             alert('Email or password is incorrect');
