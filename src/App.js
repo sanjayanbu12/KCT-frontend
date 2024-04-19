@@ -5,7 +5,8 @@ import Login from "./components/Login/Login";
 import Dashboard from "./components/DashBoard/Dashboard";
 import Home from "./components/home/Home";
 import Form from "./components/form/Form";
-import Table from "./components/Table/Table"
+import Table from "./components/Table/StudentTable"
+import StudentTable from "./components/Table/StudentTable";
 function App() {
   return (
     <Router>
@@ -21,7 +22,7 @@ function App() {
             <Routes>
               <Route path="/home" element={<Home />} />
               <Route path="/form" element={<Form />} />
-              <Route path="/table" element={<Table />} />
+              <Route path="/table" element={<StudentTable />} />
             </Routes>
           </Grid>
         </Grid>

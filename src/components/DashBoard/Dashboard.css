@@ -1,5 +1,5 @@
 :root {
-  --background: #fffff;
+  --background: #ffffff;
   --navbar-width: 300px;
   --navbar-width-min: 80px;
   --navbar-dark-primary: #18283b;
@@ -103,7 +103,7 @@ body {
 #nav-header {
   position: relative;
   width: var(--navbar-width);
-  left: 16px;
+  /* left: 16px; */
   width: calc(var(--navbar-width) - 16px);
   min-height: 80px;
   background: var(--navbar-dark-primary);
@@ -111,6 +111,7 @@ body {
   z-index: 2;
   display: flex;
   align-items: center;
+  justify-content: center;
   transition: width 0.2s;
 }
 
@@ -195,7 +196,8 @@ label[for=nav-toggle] {
   top: -70px;
   width: calc(100% - 16px);
   height: 54px;
-  background: var(--background);
+  background:var(--background);
+  color: black;
   background-attachment: fixed;
   border-radius: 16px 0 0 16px;
   transition: top 0.2s;

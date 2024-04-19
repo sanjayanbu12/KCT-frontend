@@ -15,7 +15,7 @@ const Dashboard = () => {
         <Link to="/form" className="nav-button"><i class="fas fa-images"></i><span>Form</span></Link>
         <Link to="/table" className="nav-button"><i class="fas fa-images"></i><span>Table</span></Link>
         <hr />
-        <div id="nav-content-highlight"></div>
+        {/* <div id="nav-content-highlight"></div> */}
       </div>
       <input id="nav-footer-toggle" type="checkbox" />
       <div id="nav-footer">
@@ -25,7 +25,6 @@ const Dashboard = () => {
           <label for="nav-footer-toggle"><i class="fas fa-caret-up"></i></label>
         </div>
         <div id="nav-footer-content">
-
         </div>
       </div>
 

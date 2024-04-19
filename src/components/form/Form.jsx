@@ -4,9 +4,21 @@ import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
-import StudentForm from './StudentForm'; // Import the StudentForm component
-import CourseForm from './CourseForm'; // Import the CourseForm component
-import StaffForm from './StaffForm'; // Import the StaffForm component
+import StudentForm from './StudentForm';
+import CourseForm from './CourseForm';
+import StaffForm from './StaffForm';
+import { makeStyles } from '@mui/styles';
+
+const useStyles = makeStyles({
+  activeStepIcon: {
+    '& .css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-active': {
+      color: '#2c3e50',
+    },
+    '& .css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-completed': {
+      color: '#2c3e50',
+    },
+  },
+});
 
 const steps = [
   'Student Details',
@@ -15,6 +27,7 @@ const steps = [
 ];
 
 const Form = () => {
+  const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = () => {
@@ -26,7 +39,7 @@ const Form = () => {
   };
 
   const handleSubmit = () => {
-    // Logic for submitting form data
+    // Handle form submission
   };
 
   const isLastStep = activeStep === steps.length - 1;
@@ -34,7 +47,7 @@ const Form = () => {
   return (
     <div style={{ margin: '3vw 3vw 3vw 0' }}>
       <Box sx={{ width: '100%' }}>
-        <Stepper activeStep={activeStep} alternativeLabel>
+        <Stepper activeStep={activeStep} alternativeLabel className={classes.activeStepIcon}>
           {steps.map((label, index) => (
             <Step key={label}>
               <StepLabel>{label}</StepLabel>
@@ -49,16 +62,16 @@ const Form = () => {
       </Box>
       <div style={{ marginTop: '5vw', display: 'flex', justifyContent: 'space-between' }}>
         {activeStep !== 0 && (
-          <Button variant="contained" color="primary" onClick={handleBack} sx={{ width: '25%' }}>
+          <Button variant="contained" color="primary" onClick={handleBack} sx={{ width: '10%', backgroundColor: '#2c3e50', '&:hover': { backgroundColor: '#2c3e50' } }}>
             Back
           </Button>
         )}
         {isLastStep ? (
-          <Button variant="contained" color="primary" onClick={handleSubmit} sx={{ width: '25%' }}>
+          <Button variant="contained" color="primary" onClick={handleSubmit} sx={{ width: '10%', backgroundColor: '#2c3e50', '&:hover': { backgroundColor: '#2c3e50' } }}>
             Submit
           </Button>
         ) : (
-          <Button variant="contained" color="primary" onClick={handleNext} sx={{ width: '25%' }}>
+          <Button variant="contained" color="primary" onClick={handleNext} sx={{ width: '10%', backgroundColor: '#2c3e50', '&:hover': { backgroundColor: '#2c3e50' } }}>
             Next
           </Button>
         )}
