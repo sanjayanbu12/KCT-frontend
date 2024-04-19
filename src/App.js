@@ -6,12 +6,11 @@ import Dashboard from "./components/DashBoard/Dashboard";
 import Home from "./components/home/Home";
 import Form from "./components/form/Form";
 import Table from "./components/Table/Table"
-
 function App() {
   return (
     <Router>
       <Routes>
-      <Route path="/" element={<Login />} />
+        <Route path="/" element={<Login />} />
       </Routes>
       <Stack>
         <Grid container>
