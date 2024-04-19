@@ -10,14 +10,16 @@ import Table from "./components/Table/Table"
 function App() {
   return (
     <Router>
-      <Stack minHeight="100vh">
+      <Routes>
+      <Route path="/" element={<Login />} />
+      </Routes>
+      <Stack>
         <Grid container>
           <Grid item xs={3}>
             <Dashboard />
           </Grid>
           <Grid item xs={9}>
             <Routes>
-              <Route path="/" element={<Login />} />
               <Route path="/home" element={<Home />} />
               <Route path="/form" element={<Form />} />
               <Route path="/table" element={<Table />} />

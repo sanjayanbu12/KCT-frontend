@@ -31,7 +31,7 @@ const Login = () => {
                 <div className="signin">
                     <div className="main">
                         <h1>Login to KCOT</h1>
-                        <h2 style={{ marginBottom: "20px" }}>Kumarasamy College</h2>
+                        {/* <h2 style={{ marginBottom: "20px" }}>Kumarasamy College</h2> */}
                         <h4 style={{ marginBottom: "20px" }}>Enter your login credentials</h4>
                         <form onSubmit={handleSubmit}>
                             <input
