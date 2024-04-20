@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import { Grid, Button } from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
 
-const CourseForm = () => {
+const CourseSemtwo = () => {
     const [courses, setCourses] = useState([]);
 
     const handleAddCourseClick = () => {
@@ -23,7 +23,7 @@ const CourseForm = () => {
                 <Grid container spacing={2} style={{ marginBottom: '1vw' }}>
                     <Grid item xs={3}>
                         <InputLabel id="demo-simple-select-label" style={{ fontWeight: '500', color: 'black' }}> Semester</InputLabel>
-                        <TextField style={{ width: '100%' }} id="outlined-disabled" disabled size="small" value="Semester 1" variant="outlined" />
+                        <TextField style={{ width: '100%' }} id="outlined-disabled" disabled size="small" value="Semester 2" variant="outlined" />
                     </Grid>
                 </Grid>
 
@@ -99,4 +99,4 @@ const CourseForm = () => {
     );
 };
 
-export default CourseForm;
+export default CourseSemtwo;

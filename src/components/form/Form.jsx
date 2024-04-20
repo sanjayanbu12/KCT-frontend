@@ -6,6 +6,8 @@ import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import StudentForm from './StudentForm';
 import CourseForm from './CourseForm';
+import CourseSemtwo from './CourseSemtwo';
+import CourseSemthree from './CourseSemthree';
 import StaffForm from './StaffForm';
 import { makeStyles } from '@mui/styles';
 
@@ -22,7 +24,9 @@ const useStyles = makeStyles({
 
 const steps = [
   'Student Details',
-  'Course Details',
+  'Sem 1 Course Details',
+  'Sem 2 Course Details',
+  'Sem 3 Course Details',
   'Staff Details',
 ];
 
@@ -57,7 +61,9 @@ const Form = () => {
         <div style={{ marginTop: '3vw' }}>
           {activeStep === 0 && <StudentForm />}
           {activeStep === 1 && <CourseForm />}
-          {activeStep === 2 && <StaffForm />}
+          {activeStep === 2 && <CourseSemtwo />}
+          {activeStep === 3 && <CourseSemthree />}
+          {activeStep === 4 && <StaffForm />}
         </div>
       </Box>
       <div style={{ marginTop: '5vw', display: 'flex', justifyContent: 'space-between' }}>
