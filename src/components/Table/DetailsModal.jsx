@@ -45,7 +45,7 @@ const DetailsModal = (props) => {
                 style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
             >
                 <Box sx={style}>
-                    <Box style={{ padding: '10px', height: '50px', fontWeight: 'bold', fontSize: '16px', color: 'black', display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px', backgroundColor: 'rgba(178, 207, 217)', borderRadius: '5px', borderBottom: '1px solid black' }}>
+                    <Box style={{ padding: '5px 30px', height: '50px', fontWeight: 'bold', fontSize: '16px', color: 'black', display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px', backgroundColor: 'rgba(178, 207, 217)', borderRadius: '5px', borderBottom: '1px solid black' }}>
                         <div>CGPA:9.00</div>
                         <div>CLASS:First</div>
                     </Box>
