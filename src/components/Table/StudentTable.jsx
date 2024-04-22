@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Table, TableContainer, TableHead, TableRow, TableCell, TableBody, Paper } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Profile from '../ProfileDetails/Profile';
+import DetailsModal from './DetailsModal';
 
 const StudentTable = () => {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   return (
     <div style={{ margin: '3vw 3vw 3vw 0' }}>
       <div>
@@ -19,6 +23,7 @@ const StudentTable = () => {
               <TableCell>Mobile Number</TableCell>
               <TableCell>Date of Birth</TableCell>
               <TableCell>Action</TableCell>
+              <TableCell>View</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -30,6 +35,9 @@ const StudentTable = () => {
               <TableCell>
                 <EditIcon />
                 <DeleteIcon />
+              </TableCell>
+              <TableCell onClick={handleOpen}>
+                View details
               </TableCell>
             </TableRow>
             <TableRow>
@@ -75,6 +83,7 @@ const StudentTable = () => {
           </TableBody>
         </Table>
       </TableContainer>
+      <DetailsModal open={open} handleClose={handleClose} />
     </div>
   );
 }

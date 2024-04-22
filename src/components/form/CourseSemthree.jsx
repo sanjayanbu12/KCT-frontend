@@ -4,17 +4,20 @@ import TextField from '@mui/material/TextField';
 import { Grid, Button } from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
 
-const CourseSemthree = () => {
+const CourseSemthree = (props) => {
     const [courses, setCourses] = useState([]);
+    const { formData, setFormData } = props;
 
     const handleAddCourseClick = () => {
-        setCourses([...courses, {}]);
+        const updatedFormData = { ...formData };
+        updatedFormData.semesters[2].courses.push({});
+        setFormData(updatedFormData);
     };
 
     const handleCourseChange = (index, field, value) => {
-        const updatedCourses = [...courses];
-        updatedCourses[index][field] = value;
-        setCourses(updatedCourses);
+        const updatedFormData = { ...formData };
+        updatedFormData.semesters[2].courses[index][field] = value;
+        setFormData(updatedFormData);
     };
 
     return (
@@ -27,7 +30,7 @@ const CourseSemthree = () => {
                     </Grid>
                 </Grid>
 
-                <Grid container spacing={2} style={{ marginBottom: '1vw' }}>
+                {/* <Grid container spacing={2} style={{ marginBottom: '1vw' }}>
                     <Grid item xs={3}>
                         <InputLabel id="demo-simple-select-label" style={{ fontWeight: '500', color: 'black' }}>Course Code</InputLabel>
                         <TextField style={{ width: '100%' }} id="outlined-basic" size="small" variant="outlined" />
@@ -63,9 +66,9 @@ const CourseSemthree = () => {
                         <InputLabel id="demo-simple-select-label" style={{ fontWeight: '500', color: 'black' }}>Grade Points</InputLabel>
                         <TextField style={{ width: '100%' }} id="outlined-basic" size="small" variant="outlined" />
                     </Grid>
-                </Grid>
+                </Grid> */}
 
-                {courses.map((course, index) => (
+                {formData.semesters[2].courses.map((course, index) => (
                     <Grid container spacing={2} style={{ marginBottom: '1vw' }} key={index}>
                         <Grid item xs={3}>
                             <InputLabel id={`course-code-label-${index}`} style={{ fontWeight: '500', color: 'black' }}>Course Code</InputLabel>
@@ -80,12 +83,12 @@ const CourseSemthree = () => {
                         <Grid item xs={3}>
                             <InputLabel id={`credit-points-label-${index}`} style={{ fontWeight: '500', color: 'black' }}>Credit Points</InputLabel>
                             <TextField style={{ width: '100%' }} id={`credit-points-${index}`} size="small" variant="outlined"
-                                onChange={(e) => handleCourseChange(index, 'creditPoints', e.target.value)} />
+                                onChange={(e) => handleCourseChange(index, 'credit', e.target.value)} />
                         </Grid>
                         <Grid item xs={3}>
                             <InputLabel id={`grade-points-label-${index}`} style={{ fontWeight: '500', color: 'black' }}>Grade Points</InputLabel>
                             <TextField style={{ width: '100%' }} id={`grade-points-${index}`} size="small" variant="outlined"
-                                onChange={(e) => handleCourseChange(index, 'gradePoints', e.target.value)} />
+                                onChange={(e) => handleCourseChange(index, 'grade', e.target.value)} />
                         </Grid>
                     </Grid>
                 ))}
