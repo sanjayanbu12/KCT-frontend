@@ -81,7 +81,7 @@ const CourseForm = () => {
                             <InputLabel id={`credit-points-label-${index}`} style={{ fontWeight: '500', color: 'black' }}>Credit Points</InputLabel>
                             <TextField style={{ width: '100%' }} id={`credit-points-${index}`} size="small" variant="outlined"
                                 onChange={(e) => handleCourseChange(index, 'creditPoints', e.target.value)} />
-                        </Grid>
+                        </Grid> 
                         <Grid item xs={3}>
                             <InputLabel id={`grade-points-label-${index}`} style={{ fontWeight: '500', color: 'black' }}>Grade Points</InputLabel>
                             <TextField style={{ width: '100%' }} id={`grade-points-${index}`} size="small" variant="outlined"

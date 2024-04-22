@@ -2,6 +2,7 @@ import React from 'react';
 import { Table, TableContainer, TableHead, TableRow, TableCell, TableBody, Paper } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Profile from '../ProfileDetails/Profile';
 
 const StudentTable = () => {
   return (
