@@ -6,7 +6,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem'; 
 import InputLabel from '@mui/material/InputLabel';
 
-const StudentForm = ({ formData, setFormData }) => {
+const StudentForm = ({ formData, setFormData,  }) => {
     const handleInputChange = (field, value) => {
         console.log(field, value)
       setFormData((prevData) => ({
@@ -19,6 +19,8 @@ const StudentForm = ({ formData, setFormData }) => {
       }));
     };
     
+   
+
     return (
         <div style={{ margin: '2vw 2vw 2vw 0' }}>
             <div>
@@ -97,28 +99,50 @@ const StudentForm = ({ formData, setFormData }) => {
                 </Grid>
 
                 <Grid container spacing={2} style={{ marginBottom: '3vw' }}>
-                    <Grid item xs={3}>
-                    <InputLabel id="demo-simple-select-label" style={{fontWeight: '500',color: 'black'}}>Date of Birth</InputLabel>
-
-                        <TextField 
-                         value={formData?.dob || ''}
-                         onChange={(e) => handleInputChange('dob', e.target.value)}
-                        style={{ width: '100%' }} id="outlined-basic" size="small" type='date' variant="outlined" />
-                    </Grid>
+                <Grid item xs={3}>
+    <InputLabel id="demo-simple-select-label" style={{fontWeight: '500', color: 'black'}}>Date of Birth</InputLabel>
+    <TextField 
+        value={formData?.dob || ''}
+        onChange={(e) => handleInputChange('dob', e.target.value)}
+        style={{ width: '100%' }}
+        id="outlined-basic"
+        size="small"
+        type='date'
+        variant="outlined"
+        // Set max date to today's date (YYYY-MM-DD format)
+        InputLabelProps={{ shrink: true }}
+        inputProps={{ max: new Date().toISOString().split('T')[0] }}
+    />
+</Grid>
                     <Grid item xs={3}>
                     <InputLabel id="demo-simple-select-label" style={{fontWeight: '500',color: 'black'}}>Select Academic Year</InputLabel>
                         <Select 
                          value={formData?.academicYear || ''}
                          onChange={(e) => handleInputChange('academicYear', e.target.value)}
                         style={{ width: '100%' }} id="outlined-basic"  size="small"  variant="outlined">
-                            <MenuItem value="2024">2024</MenuItem>
-                            <MenuItem value="2023">2023</MenuItem>
-                            <MenuItem value="2022">2022</MenuItem>
-                            <MenuItem value="2021">2021</MenuItem>
-                            <MenuItem value="2020">2020</MenuItem>
-                            <MenuItem value="2019">2019</MenuItem>
-                            <MenuItem value="2018">2018</MenuItem>
-                            <MenuItem value="2017">2017</MenuItem>
+                                <MenuItem value="2024">2022-2024</MenuItem>
+                            <MenuItem value="2024">2021-2023</MenuItem>
+                            <MenuItem value="2024">2020-2022</MenuItem>
+                            <MenuItem value="2024">2019-2021</MenuItem>
+                            <MenuItem value="2024">2018-2020</MenuItem>
+                            <MenuItem value="2024">2017-2019</MenuItem>
+                             <MenuItem value="2024">2016-2018</MenuItem>
+                             <MenuItem value="2024">2015-2017</MenuItem>
+                             <MenuItem value="2024">2014-2016</MenuItem>
+                             <MenuItem value="2024">2013-2015</MenuItem>
+                             <MenuItem value="2024">2012-2014</MenuItem>
+                             <MenuItem value="2024">2011-2013</MenuItem>
+                             <MenuItem value="2024">2010-2012</MenuItem>
+                             <MenuItem value="2024">2009-2011</MenuItem>
+                             <MenuItem value="2024">2008-2010</MenuItem>
+                            <MenuItem value="2024">2007-2009</MenuItem>
+                            <MenuItem value="2023">2006-2008</MenuItem>
+                            <MenuItem value="2022">2005-2007</MenuItem>
+                            <MenuItem value="2021">2004-2006</MenuItem>
+                            <MenuItem value="2020">2003-2005</MenuItem>
+                            <MenuItem value="2019">2002-2004</MenuItem>
+                            <MenuItem value="2018">2001-2003</MenuItem>
+                            <MenuItem value="2017">2000-2002</MenuItem>
                         </Select>
                     </Grid>
                 </Grid>
