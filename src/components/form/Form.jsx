@@ -49,6 +49,7 @@ const Form = () => {
             'Content-Type': 'application/json'
         }
     });
+    setFormData({semesters: []});
       console.log(response)
     }
     catch (error) {
