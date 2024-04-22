@@ -46,10 +46,11 @@ const DetailsModal = (props) => {
             >
                 <Box sx={style}>
                     <Box style={{ padding: '5px 30px', height: '50px', fontWeight: 'bold', fontSize: '16px', color: 'black', display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px', backgroundColor: 'rgba(178, 207, 217)', borderRadius: '5px', borderBottom: '1px solid black' }}>
-                        <div>CGPA:9.00</div>
-                        <div>CLASS:First</div>
+                        <div> CGPA &nbsp;-&nbsp;{student ? student.cgpa : "cgpa"}</div>
+                        <div>{student ? student.studentClass : "studentClass"}</div>
                     </Box>
                     <Grid container spacing={2}>
+                        
                         <Grid item xs={4} style={{ display: 'flex', flexDirection: 'row' }}>
                             <Typography variant='h6' style={{ fontWeight: 'bold' }}>Name:&nbsp;</Typography>
                             <Typography variant='h6'>{student ? student.name : "Name"}</Typography>
@@ -114,6 +115,31 @@ const DetailsModal = (props) => {
                             </TableContainer>
                         </div>
                     ))}
+
+<Grid container spacing={2} style={{marginTop:'20px'}}>
+                        
+                        <Grid item xs={4} style={{ display: 'flex', flexDirection: 'row' }}>
+                            <Typography variant='h6' style={{ fontWeight: 'bold' }}>Staff Name:&nbsp;</Typography>
+                            <Typography variant='h6'>{student ? student.StaffName : "StaffName  "}</Typography>
+                        </Grid>
+                        <Grid item xs={4} style={{ display: 'flex', flexDirection: 'row' }}>
+                            <Typography variant='h6' style={{ fontWeight: 'bold' }}>Staff Gender:&nbsp;</Typography>
+                            <Typography variant='h6'>{student ? student.StaffGender : "StaffGender"}</Typography>
+                        </Grid>
+                        <Grid item xs={4} style={{ display: 'flex', flexDirection: 'row' }}>
+                            <Typography variant='h6' style={{ fontWeight: 'bold' }}>Staff Email:&nbsp;</Typography>
+                            <Typography variant='h6'>{student ? student.StaffEmail : "StaffEmail"}</Typography>
+                        </Grid>
+                        <Grid item xs={4} style={{ display: 'flex', flexDirection: 'row' }}>
+                            <Typography variant='h6' style={{ fontWeight: 'bold' }}>Staff Designation:&nbsp;</Typography>
+                            <Typography variant='h6'>{student ? student.StaffDesignation : "StaffDesignation"}</Typography>
+                        </Grid>
+                        <Grid item xs={4} style={{ display: 'flex', flexDirection: 'row' }}>
+                            <Typography variant='h6' style={{ fontWeight: 'bold' }}>Staff No:&nbsp;</Typography>
+                            <Typography variant='h6'>{student ? student.StaffPhoneNo : "StaffPhoneNo"}</Typography>
+                        </Grid>
+                        
+                    </Grid>
                 </Box>
             </Modal>
         </div>

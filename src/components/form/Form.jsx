@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Box, Stepper, Step, StepLabel, Button } from '@mui/material';
 import StudentForm from './StudentForm';
 import CourseForm from './CourseForm';
@@ -6,6 +6,7 @@ import StaffForm from './StaffForm';
 import axios from 'axios';
 import CourseSemtwo from './CourseSemtwo';
 import CourseSemthree from './CourseSemthree';
+
 const steps = ['Student Details', 'Sem 1 Course Details', 'Sem 2 Course Details', 'Sem 3 Course Details', 'Staff Details'];
 
 const Form = () => {
@@ -32,6 +33,8 @@ const Form = () => {
     ]
   });
   const [activeStep, setActiveStep] = useState(0);
+  const [formSubmitted, setFormSubmitted] = useState(false);
+
 
   const handleNext = () => {
     setActiveStep((prevStep) => prevStep + 1);
@@ -51,11 +54,18 @@ const Form = () => {
     });
     setFormData({semesters: []});
       console.log(response)
+      setFormSubmitted(true);
     }
     catch (error) {
       console.log(error)
     }
   };
+  useEffect(() => {
+    if (formSubmitted) {
+      // Redirect to /table after form submission
+      window.location.replace('/table');
+    }
+  }, [formSubmitted]);
 
   const getStepContent = (step) => {
     switch (step) {

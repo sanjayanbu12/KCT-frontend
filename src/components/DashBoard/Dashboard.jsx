@@ -1,19 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Dashboard.css';
+import HomeIcon from '@mui/icons-material/Home';
+import ContactEmergencyIcon from '@mui/icons-material/ContactEmergency';
+import TableChartIcon from '@mui/icons-material/TableChart';
 const Dashboard = () => {
   return (
 
     <div id="nav-bar">
       <input id="nav-toggle" type="checkbox" />
-      <div id="nav-header"><a id="nav-title">Student Details<i class="fab fa-codepen"></i></a>
+      <div id="nav-header"><a id="nav-title">SVKCOT<i class="fab fa-codepen"></i></a>
         {/* <label for="nav-toggle"><span id="nav-toggle-burger"></span></label> */}
         <hr />
       </div>
-      <div id="nav-content">
-        <Link to="/home" className="nav-button"><i class="fas fa-images"></i><span>Home</span></Link>
-        <Link to="/form" className="nav-button"><i class="fas fa-images"></i><span>Form</span></Link>
-        <Link to="/table" className="nav-button"><i class="fas fa-images"></i><span>Table</span></Link>
+      <div id="nav-content"> 
+        <Link to="/home" className="nav-button"><i class="fas fa-images"><HomeIcon sx={{mt:'1px',fontSize:'1.3rem'}}/></i><span>Home</span></Link>
+        <Link to="/form" className="nav-button"><i class="fas fa-images"><ContactEmergencyIcon sx={{mt:'1px',fontSize:'1.3rem'}}/></i><span>Form</span></Link>
+        <Link to="/table" className="nav-button"><i class="fas fa-images"><TableChartIcon sx={{mt:'1px',fontSize:'1.3rem'}}/></i><span>Table</span></Link>
         <hr />
         {/* <div id="nav-content-highlight"></div> */}
       </div>
