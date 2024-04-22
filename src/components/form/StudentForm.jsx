@@ -7,17 +7,17 @@ import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 
 const StudentForm = ({ formData, setFormData }) => {
+    console.log(formData)
     const handleInputChange = (field, value) => {
-        console.log(field, value)
-      setFormData((prevData) => ({
-        ...prevData,
-        [field]: value,
-        // studentDetails: {
-        //   ...prevData?.studentDetails,
-        //   [field]: value
-        // }
-      }));
-    };
+        if (field === 'dob') {
+          // Parse the date string and convert it to the desired format
+          const parsedDate = new Date(value);
+          const formattedDate = `${parsedDate.getDate()}/${parsedDate.getMonth() + 1}/${parsedDate.getFullYear()}`;
+          setFormData({ ...formData, [field]: formattedDate });
+        } else {
+          setFormData({ ...formData, [field]: value });
+        }
+      }; 
     
     return (
         <div style={{ margin: '2vw 2vw 2vw 0' }}>
@@ -103,7 +103,10 @@ const StudentForm = ({ formData, setFormData }) => {
                         <TextField 
                          value={formData?.dob || ''}
                          onChange={(e) => handleInputChange('dob', e.target.value)}
-                        style={{ width: '100%' }} id="outlined-basic" size="small" type='date' variant="outlined" />
+                        style={{ width: '100%' }} id="outlined-basic" size="small" type='date'  variant="outlined"
+                        InputLabelProps={{
+                            shrink: true,
+                          }} />
                     </Grid>
                     <Grid item xs={3}>
                     <InputLabel id="demo-simple-select-label" style={{fontWeight: '500',color: 'black'}}>Select Academic Year</InputLabel>

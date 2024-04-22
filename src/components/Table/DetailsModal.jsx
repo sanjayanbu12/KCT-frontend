@@ -12,23 +12,22 @@ const style = {
     bgcolor: 'background.paper',
     boxShadow: 24,
     p: 4,
-    height: "100vh",
+    height: "90vh",
     overflow: 'scroll',
-    marginTop: "50px"
+    border:"none",
   };
-  const DetailContainer = styled.div`
-  
-  `
+ 
 const DetailsModal = (props) => {
   const {open,handleClose,student} = props;
    console.log(student)
   return (
-    <div style={{height:"100vh"}}>
+    <div >
         <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        style={{display:'flex',justifyContent:'center',alignItems:'center'}}
       >
         <Box sx={style}>
        <Grid container spacing={2}>

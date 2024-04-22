@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, TableContainer, TableHead, TableRow, TableCell, TableBody, Paper } from '@mui/material';
+import { Table, TableContainer, TableHead, TableRow, TableCell, TableBody, Paper, Tooltip } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Profile from '../ProfileDetails/Profile';
@@ -31,6 +31,16 @@ const StudentTable = () => {
     handleOpen(); // Open modal
   };
 
+  const handleDelete =async (id) => {
+    try{
+        const response = await axios.delete(`http://localhost:5000/api/delete-student/${id}`);
+        console.log(response)
+        getDetails();
+    }
+    catch(error){
+      console.log(error)
+    }
+  }
   return (
     <div style={{ margin: '3vw 3vw 3vw 0' }}>
       <div>
@@ -44,6 +54,8 @@ const StudentTable = () => {
               <TableCell>Email</TableCell>
               <TableCell>Mobile Number</TableCell>
               <TableCell>Date of Birth</TableCell>
+              <TableCell>CGPA</TableCell>
+              <TableCell>Class</TableCell>
               <TableCell>View</TableCell>
               <TableCell>Action</TableCell>
             </TableRow>
@@ -55,12 +67,15 @@ const StudentTable = () => {
       <TableCell>{data.email}</TableCell>
       <TableCell>{data.phoneNo}</TableCell>
       <TableCell>{data.dob}</TableCell>
-     
+      <TableCell>cgpa</TableCell>
+      <TableCell>class</TableCell>
       <TableCell  onClick={() => handleViewDetails(data)} style={{ cursor: 'pointer' }}>
         View details
       </TableCell>
       <TableCell>
-        <DeleteIcon />
+      <Tooltip title="Delete">
+        <DeleteIcon onClick={() => handleDelete(data._id)} style={{ cursor: 'pointer' }}/>
+        </Tooltip>
       </TableCell>
     </TableRow>
   </TableBody>
