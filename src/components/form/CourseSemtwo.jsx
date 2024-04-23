@@ -69,7 +69,7 @@ const CourseSemtwo = (props) => {
                                 inputRef={creditInputRef2}
                                 onChange={(e) => {
                                     const newValue = e.target.value.replace(/[^0-9]/g, '');
-                                    handleCourseChange(index, 'credit', newValue);
+                                    handleCourseChange(index, 'credit', newValue); 
                                 }}
                             />
                         </Grid>

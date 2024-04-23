@@ -1,180 +1,194 @@
-  import React, { useEffect, useState } from 'react';
-  import { Table, TableContainer, TableHead, TableRow, TableCell, TableBody, Paper, Tooltip, Pagination } from '@mui/material';
-  import EditIcon from '@mui/icons-material/Edit';
-  import DeleteIcon from '@mui/icons-material/Delete';
-  import Profile from '../ProfileDetails/Profile';
-  import DetailsModal from './DetailsModal';
-  import axios from 'axios';
-  import StarIcon from '@mui/icons-material/Star';
-  import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-  import Swal from 'sweetalert2';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { 
+  Table, 
+  TableContainer, 
+  TableHead, 
+  TableRow, 
+  TableCell, 
+  TableBody, 
+  Paper, 
+  Tooltip, 
+  Pagination, 
+  InputBase,  // Import InputBase from Material-UI
+  IconButton  // Import IconButton from Material-UI
+} from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import SearchIcon from '@mui/icons-material/Search';
+import StarIcon from '@mui/icons-material/Star';
+import Swal from 'sweetalert2';
+import DetailsModal from './DetailsModal';
 
-  const StudentTable = () => {
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-    const [details, setDetails] = useState();
-    const [selectedStudent, setSelectedStudent] = useState();
-    console.log(selectedStudent, 'selectedStudent');
-    const [page, setPage] = useState(1); // Track current page
-    const rowsPerPage = 6; // Number of rows per page
-    const getDetails = async() => {
-      try{
-        const response= await axios.get(`https://kct-backend.onrender.com/api/getallstudents`);
-        setDetails(response.data)
-      }catch(error){
-        console.log(error)
+const StudentTable = () => {
+  const [details, setDetails] = useState([]);
+  const [selectedStudent, setSelectedStudent] = useState(null);
+  const [page, setPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState('');
+  const rowsPerPage = 6;
+
+  useEffect(() => {
+    getDetails();
+  }, []);
+
+  const getDetails = async () => {
+    try {
+      const response = await axios.get(`https://kct-backend.onrender.com/api/getallstudents`);
+      setDetails(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleViewDetails = (student) => {
+    setSelectedStudent(student);
+  };
+
+  const handleDelete = async (id) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will not be able to recover this student!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Delete',
+      cancelButtonText: 'Cancel',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await axios.delete(`https://kct-backend.onrender.com/api/delete-student/${id}`);
+          Swal.fire('Deleted!', 'The student has been deleted.', 'success');
+          getDetails();
+        } catch (error) {
+          console.log(error);
+          Swal.fire('Error!', 'Failed to delete student.', 'error');
+        }
       }
+    });
+  };
+
+  const getClassCircle = (studentClass) => {
+    let classNumber = '';
+    let additionalIcon = null;
+
+    switch (studentClass) {
+      case 'First Class with Distinction':
+        classNumber = '1';
+        additionalIcon = <StarIcon style={{ color: '#FFD700', fontSize: 18 }} />;
+        break;
+      case 'First Class':
+        classNumber = '1';
+        break;
+      case 'Second Class':
+        classNumber = '2';
+        break;
+      case 'Third Class':
+        classNumber = '3';
+        break;
+      default:
+        classNumber = 'F'; // 'F' for Fail or any other case
+        break;
     }
 
-    useEffect(()=>{
-      getDetails()
-    },[]);
-
-    const handleViewDetails = (student) => {
-      setSelectedStudent(student); // Set selected student details in state
-      handleOpen(); // Open modal
-    };
-
-    const handleDelete = async (id) => {
-      // Show a confirmation dialog before deleting
-      Swal.fire({
-        title: 'Are you sure?',
-        text: 'You will not be able to recover this student!',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Delete',
-        cancelButtonText: 'Cancel',
-        confirmButtonStyle: {
-          marginRight: '10px',
-          // Adjust margin between buttons
-        },
-        cancelButtonStyle: {
-          backgroundColor: '#d33', // Customize cancel button color
-        },
-      }).then(async (result) => {
-        if (result.isConfirmed) {
-          try {
-            // If confirmed, make the delete request
-            const response = await axios.delete(`https://kct-backend.onrender.com/api/delete-student/${id}`);
-            console.log(response);
-            // Show success message
-            Swal.fire('Deleted!', 'The student has been deleted.', 'success');
-            // Fetch updated details after deletion
-            getDetails();
-          } catch (error) {
-            console.log(error);
-            // Show error message if deletion fails
-            Swal.fire('Error!', 'Failed to delete student.', 'error');
-          }
-        }
-      });
-    };
-
-  
-    const getClassCircle = (studentClass) => {
-      let classNumber = '';
-      let additionalIcon = null;
-    
-      switch (studentClass) {
-        case 'First Class with Distinction':
-          classNumber = '1';
-          additionalIcon = <StarIcon style={{ color: '#FFD700', fontSize: 18 }} />;
-          break;
-        case 'First Class':
-          classNumber = '1';
-          break;
-        case 'Second Class':
-          classNumber = '2';
-          break;
-        case 'Third Class':
-          classNumber = '3';
-          break;
-        default:
-          classNumber = 'F'; // 'F' for Fail or any other case
-          break;
-      }
-
-        // Calculate starting index of current page
-
-    
-      return (
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: 40,
-            height: 40,
-            borderRadius: '50%',
-            backgroundColor: '#18283B', // You can customize the color
-            color: '#fff',
-            fontWeight: 'bold',
-          }}
-        >
-        {/* Render star icon if it exists */}
-          {classNumber}
-          {additionalIcon}
-        </div>
-      );
-    };
-    const startIndex = (page - 1) * rowsPerPage;
-    // Slice the details array to get the rows for the current page
-    const paginatedData = details?.slice(startIndex, startIndex + rowsPerPage);
     return (
-      <div style={{ margin: '3vw 3vw 3vw 0' }}>
-        <div>
-          <h3>Student Table</h3>
-        </div>
-        <TableContainer component={Paper} style={{ margin: '3vw 3vw 3vw 0' }}>
-          <Table>
-            <TableHead>
-              <TableRow style={{ backgroundColor: '#D3D3D3' }}>
-                <TableCell>Name</TableCell>
-                <TableCell>Email</TableCell>
-                <TableCell>Mobile Number</TableCell>
-                <TableCell>Academic Year</TableCell>
-                <TableCell>CGPA</TableCell>
-                <TableCell>Class</TableCell>
-                <TableCell>View</TableCell>
-                <TableCell>Action</TableCell>
-              </TableRow>
-            </TableHead>
-            {details && paginatedData.map((data) => (  
-    <TableBody key={data._id}>
-      <TableRow>
-        <TableCell>{data.name}</TableCell>
-        <TableCell>{data.email}</TableCell>
-        <TableCell>{data.phoneNo}</TableCell>
-        <TableCell>{data.academicYear}</TableCell>
-        <TableCell>{data.cgpa}</TableCell>
-        <TableCell>{getClassCircle(data.studentClass)}</TableCell>
-        <TableCell  onClick={() => handleViewDetails(data)} style={{ cursor: 'pointer' }}>
-         <RemoveRedEyeIcon/>
-        </TableCell>
-        <TableCell>
-        <Tooltip title="Delete">
-        <DeleteIcon
-  onClick={() => handleDelete(data._id)}
-  style={{ cursor: 'pointer' }}
-/>
-          </Tooltip>
-        </TableCell>
-      </TableRow>
-    </TableBody>
-  ))}
-          </Table>
-          <Pagination
-        count={Math.ceil(details?.length / rowsPerPage)} 
-        page={page}
-        onChange={(event, value) => setPage(value)} 
-      />
-        </TableContainer>
-        <DetailsModal open={open} handleClose={handleClose} student={selectedStudent}/>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: 40,
+          height: 40,
+          borderRadius: '50%',
+          backgroundColor: '#18283B',
+          color: '#fff',
+          fontWeight: 'bold',
+        }}
+      >
+        {classNumber}
+        {additionalIcon}
       </div>
     );
-  }
+  };
 
-  export default StudentTable;
+  const handleSearchInputChange = (event) => {
+    setSearchQuery(event.target.value);
+    setPage(1); // Reset page to 1 when search query changes
+  };
+
+  const filteredData = details.filter((data) =>
+    data.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    data.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    data.phoneNo.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    data.academicYear.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    data.cgpa.toString().toLowerCase().includes(searchQuery.toLowerCase()) ||
+    data.studentClass.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const startIndex = (page - 1) * rowsPerPage;
+  const paginatedData = filteredData.slice(startIndex, startIndex + rowsPerPage);
+
+  return (
+    <div style={{ margin: '3vw 3vw 3vw 0' }}>
+      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem',justifyContent:'space-between' }}>
+        <h3 style={{ marginRight: '1rem' }}>Student Table</h3>
+        <Paper component="form" elevation={3} style={{ padding: '4px 8px', display: 'flex', alignItems: 'center',justifyContent:'space-between' }}>
+          <InputBase
+            placeholder="Search..."
+            value={searchQuery}
+            onChange={handleSearchInputChange}
+            style={{ flex: 1 }}
+          />
+          {/* <IconButton type="submit" aria-label="search"> */}
+            <SearchIcon sx={{ mr:'10px' }} />
+          {/* </IconButton> */}
+        </Paper>
+      </div>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow style={{ backgroundColor: '#D3D3D3' }}>
+              <TableCell>Name</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>Mobile Number</TableCell>
+              <TableCell>Academic Year</TableCell>
+              <TableCell>CGPA</TableCell>
+              <TableCell>Class</TableCell>
+              <TableCell>View</TableCell>
+              <TableCell>Action</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {paginatedData.map((data) => (
+              <TableRow key={data._id}>
+                <TableCell>{data.name}</TableCell>
+                <TableCell>{data.email}</TableCell>
+                <TableCell>{data.phoneNo}</TableCell>
+                <TableCell>{data.academicYear}</TableCell>
+                <TableCell>{data.cgpa}</TableCell>
+                <TableCell>{getClassCircle(data.studentClass)}</TableCell>
+                <TableCell onClick={() => handleViewDetails(data)} style={{ cursor: 'pointer' }}>
+                  <RemoveRedEyeIcon />
+                </TableCell>
+                <TableCell>
+                  <Tooltip title="Delete">
+                    <DeleteIcon onClick={() => handleDelete(data._id)} style={{ cursor: 'pointer' }} />
+                  </Tooltip>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <Pagination
+        count={Math.ceil(filteredData.length / rowsPerPage)}
+        page={page}
+        onChange={(event, value) => setPage(value)}
+        style={{ marginTop: '1rem' }}
+      />
+      <DetailsModal student={selectedStudent} />
+    </div>
+  );
+};
+
+export default StudentTable;
