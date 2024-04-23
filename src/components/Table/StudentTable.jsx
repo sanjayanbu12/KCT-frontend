@@ -1,5 +1,5 @@
   import React, { useEffect, useState } from 'react';
-  import { Table, TableContainer, TableHead, TableRow, TableCell, TableBody, Paper, Tooltip } from '@mui/material';
+  import { Table, TableContainer, TableHead, TableRow, TableCell, TableBody, Paper, Tooltip, Pagination } from '@mui/material';
   import EditIcon from '@mui/icons-material/Edit';
   import DeleteIcon from '@mui/icons-material/Delete';
   import Profile from '../ProfileDetails/Profile';
@@ -16,6 +16,8 @@
     const [details, setDetails] = useState();
     const [selectedStudent, setSelectedStudent] = useState();
     console.log(selectedStudent, 'selectedStudent');
+    const [page, setPage] = useState(1); // Track current page
+    const rowsPerPage = 6; // Number of rows per page
     const getDetails = async() => {
       try{
         const response= await axios.get(`https://kct-backend.onrender.com/api/getallstudents`);
@@ -94,6 +96,9 @@
           classNumber = 'F'; // 'F' for Fail or any other case
           break;
       }
+
+        // Calculate starting index of current page
+
     
       return (
         <div
@@ -115,6 +120,9 @@
         </div>
       );
     };
+    const startIndex = (page - 1) * rowsPerPage;
+    // Slice the details array to get the rows for the current page
+    const paginatedData = details?.slice(startIndex, startIndex + rowsPerPage);
     return (
       <div style={{ margin: '3vw 3vw 3vw 0' }}>
         <div>
@@ -134,7 +142,7 @@
                 <TableCell>Action</TableCell>
               </TableRow>
             </TableHead>
-            {details && details.map((data) => (  
+            {details && paginatedData.map((data) => (  
     <TableBody key={data._id}>
       <TableRow>
         <TableCell>{data.name}</TableCell>
@@ -158,6 +166,11 @@
     </TableBody>
   ))}
           </Table>
+          <Pagination
+        count={Math.ceil(details?.length / rowsPerPage)} 
+        page={page}
+        onChange={(event, value) => setPage(value)} 
+      />
         </TableContainer>
         <DetailsModal open={open} handleClose={handleClose} student={selectedStudent}/>
       </div>
