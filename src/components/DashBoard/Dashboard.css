@@ -304,10 +304,7 @@ label[for=nav-toggle] {
 .nav-button:nth-of-type(8):hover~#nav-content-highlight {
   top: 394px;
 }
-.nav-button :hover{
 
-  background-color:#f5f6fa
-}
 
 #nav-bar .fas {
   min-width: 3rem;
