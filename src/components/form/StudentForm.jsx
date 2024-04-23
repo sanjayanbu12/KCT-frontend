@@ -135,33 +135,33 @@ const StudentForm = ({ formData, setFormData, onValidityChange }) => {
                     </Grid>
                     <Grid item xs={3}>
                         <InputLabel id="demo-simple-select-label" style={{ fontWeight: '500', color: 'black' }}>Select Academic Year</InputLabel>
-                        <Select
+                        <Select 
                             value={formData?.academicYear || ''}
                             onChange={(e) => handleInputChange('academicYear', e.target.value)}
                             style={{ width: '100%' }} id="outlined-basic" size="small" variant="outlined">
-                            <MenuItem value="2024">2022-2024</MenuItem>
-                            <MenuItem value="2024">2021-2023</MenuItem>
-                            <MenuItem value="2024">2020-2022</MenuItem>
-                            <MenuItem value="2024">2019-2021</MenuItem>
-                            <MenuItem value="2024">2018-2020</MenuItem>
-                            <MenuItem value="2024">2017-2019</MenuItem>
-                            <MenuItem value="2024">2016-2018</MenuItem>
-                            <MenuItem value="2024">2015-2017</MenuItem>
-                            <MenuItem value="2024">2014-2016</MenuItem>
-                            <MenuItem value="2024">2013-2015</MenuItem>
-                            <MenuItem value="2024">2012-2014</MenuItem>
-                            <MenuItem value="2024">2011-2013</MenuItem>
-                            <MenuItem value="2024">2010-2012</MenuItem>
-                            <MenuItem value="2024">2009-2011</MenuItem>
-                            <MenuItem value="2024">2008-2010</MenuItem>
-                            <MenuItem value="2024">2007-2009</MenuItem>
-                            <MenuItem value="2023">2006-2008</MenuItem>
-                            <MenuItem value="2022">2005-2007</MenuItem>
-                            <MenuItem value="2021">2004-2006</MenuItem>
-                            <MenuItem value="2020">2003-2005</MenuItem>
-                            <MenuItem value="2019">2002-2004</MenuItem>
-                            <MenuItem value="2018">2001-2003</MenuItem>
-                            <MenuItem value="2017">2000-2002</MenuItem>
+                                <MenuItem value="2022-2024">2018-2020</MenuItem>
+                                <MenuItem value="2021-2023">2018-2020</MenuItem>
+                                <MenuItem value="2020-2022">2018-2020</MenuItem>
+                          <MenuItem value="2019-2021">2018-2020</MenuItem>
+                            <MenuItem value="2018-2020">2018-2020</MenuItem>
+    <MenuItem value="2017-2019">2017-2019</MenuItem>
+    <MenuItem value="2016-2018">2016-2018</MenuItem>
+    <MenuItem value="2015-2017">2015-2017</MenuItem>
+    <MenuItem value="2014-2016">2014-2016</MenuItem>
+    <MenuItem value="2013-2015">2013-2015</MenuItem>
+    <MenuItem value="2012-2014">2012-2014</MenuItem>
+    <MenuItem value="2011-2013">2011-2013</MenuItem>
+    <MenuItem value="2010-2012">2010-2012</MenuItem>
+    <MenuItem value="2009-2011">2009-2011</MenuItem>
+    <MenuItem value="2008-2010">2008-2010</MenuItem>
+    <MenuItem value="2007-2009">2007-2009</MenuItem>
+    <MenuItem value="2006-2008">2006-2008</MenuItem>
+    <MenuItem value="2005-2007">2005-2007</MenuItem>
+    <MenuItem value="2004-2006">2004-2006</MenuItem>
+    <MenuItem value="2003-2005">2003-2005</MenuItem>
+    <MenuItem value="2002-2004">2002-2004</MenuItem>
+    <MenuItem value="2001-2003">2001-2003</MenuItem>
+    <MenuItem value="2000-2002">2000-2002</MenuItem>
                         </Select>
                     </Grid>
                 </Grid>
