@@ -34,7 +34,7 @@ const Form = () => {
   });
   const [activeStep, setActiveStep] = useState(0);
   const [formSubmitted, setFormSubmitted] = useState(false);
-
+  const [isStudentFormValid, setIsStudentFormValid] = useState(false);
 
   const handleNext = () => {
     setActiveStep((prevStep) => prevStep + 1);
@@ -66,19 +66,22 @@ const Form = () => {
       window.location.replace('/table');
     }
   }, [formSubmitted]);
+  const handleStudentFormChange = (isValid) => {
+    setIsStudentFormValid(isValid);
+};
 
   const getStepContent = (step) => {
     switch (step) {
       case 0:
-        return <StudentForm formData={formData} setFormData={setFormData} />;
+        return <StudentForm formData={formData} setFormData={setFormData} onValidityChange={handleStudentFormChange} />;
       case 1:
-        return <CourseForm formData={formData} setFormData={setFormData} semester="sem1" />;
+        return <CourseForm formData={formData} setFormData={setFormData} onValidityChange={handleStudentFormChange} semester="sem1" />;
       case 2:
-        return <CourseSemtwo formData={formData} setFormData={setFormData} semester="sem2" />;
+        return <CourseSemtwo formData={formData} setFormData={setFormData} onValidityChange={handleStudentFormChange} semester="sem2" />;
       case 3:
-        return <CourseSemthree formData={formData} setFormData={setFormData} semester="sem3" />;
+        return <CourseSemthree formData={formData} setFormData={setFormData} onValidityChange={handleStudentFormChange} semester="sem3" />;
       case 4:
-        return <StaffForm formData={formData} setFormData={setFormData} />;
+        return <StaffForm formData={formData} setFormData={setFormData}  onValidityChange={handleStudentFormChange}/>;
       default:
         return null;
     }
@@ -101,11 +104,11 @@ const Form = () => {
               Back
             </Button>
             {activeStep === steps.length - 1 ? (
-              <Button variant="contained" color="primary" onClick={handleSubmit} sx={{ width: '10%', backgroundColor: '#2c3e50', '&:hover': { backgroundColor: '#2c3e50' } }}>
+              <Button variant="contained" color="primary" onClick={handleSubmit} sx={{ width: '10%', backgroundColor: '#2c3e50', '&:hover': { backgroundColor: '#2c3e50' } }} disabled={!isStudentFormValid}>
                 Submit
               </Button>
             ) : (
-              <Button variant="contained" color="primary" onClick={handleNext} sx={{ width: '10%', backgroundColor: '#2c3e50', '&:hover': { backgroundColor: '#2c3e50' } }}>
+              <Button variant="contained" color="primary" onClick={handleNext} sx={{ width: '10%', backgroundColor: '#2c3e50', '&:hover': { backgroundColor: '#2c3e50' } }} disabled={!isStudentFormValid}>
                 Next
               </Button>
             )}

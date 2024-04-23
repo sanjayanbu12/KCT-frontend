@@ -5,8 +5,13 @@ import { Grid } from '@mui/material';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
+import { useState,useEffect } from 'react';
 
-const StudentForm = ({ formData, setFormData, }) => {
+const StudentForm = ({ formData, setFormData, onValidityChange }) => {
+    const [isFormValid, setIsFormValid] = useState(false);
+    useEffect(() => {
+        validateForm();
+    }, [formData]);
     const handleInputChange = (field, value) => {
         console.log(field, value)
       setFormData((prevData) => ({
@@ -18,7 +23,12 @@ const StudentForm = ({ formData, setFormData, }) => {
         // }
       }));
     };
-
+    const validateForm = () => {
+        const { name, rollno, fathersname, gender, email, department, phoneNo, age, dob, academicYear } = formData;
+        const isValid = name && rollno && fathersname && gender && email && department && phoneNo && age && dob && academicYear;
+        setIsFormValid(isValid);
+        onValidityChange(isValid); 
+    };
 
 
     return (
