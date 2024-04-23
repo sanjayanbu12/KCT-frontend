@@ -18,7 +18,7 @@
     console.log(selectedStudent, 'selectedStudent');
     const getDetails = async() => {
       try{
-        const response= await axios.get(`http://localhost:5000/api/getallstudents`);
+        const response= await axios.get(`https://kct-backend.onrender.com/api/getallstudents`);
         setDetails(response.data)
       }catch(error){
         console.log(error)
@@ -43,7 +43,7 @@
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'delete',
+        confirmButtonText: 'Delete',
         cancelButtonText: 'Cancel',
         confirmButtonStyle: {
           marginRight: '10px',
@@ -56,7 +56,7 @@
         if (result.isConfirmed) {
           try {
             // If confirmed, make the delete request
-            const response = await axios.delete(`http://localhost:5000/api/delete-student/${id}`);
+            const response = await axios.delete(`https://kct-backend.onrender.com/api/delete-student/${id}`);
             console.log(response);
             // Show success message
             Swal.fire('Deleted!', 'The student has been deleted.', 'success');

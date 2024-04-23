@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { Grid, Button } from '@mui/material';
@@ -7,6 +7,9 @@ import InputLabel from '@mui/material/InputLabel';
 const CourseForm = (props) => {
     const [isFormValid, setIsFormValid] = useState(false);
     const { formData, setFormData, onValidityChange } = props;
+
+    const creditInputRef = useRef(null);
+    const gradeInputRef = useRef(null);
 
     const handleAddCourseClick = () => {
         const updatedFormData = { ...formData };
@@ -37,6 +40,7 @@ const CourseForm = (props) => {
         onValidityChange(isValid);
     };
 
+
     return (
         <div style={{ margin: '2vw 2vw 2vw 0' }}>
             <Box>
@@ -60,14 +64,32 @@ const CourseForm = (props) => {
                                 onChange={(e) => handleCourseChange(index, 'title', e.target.value)} />
                         </Grid>
                         <Grid item xs={3}>
-                            <InputLabel id={`credit-points-label-${index}`} style={{ fontWeight: '500', color: 'black' }}>Credit Points</InputLabel>
-                            <TextField style={{ width: '100%' }} id={`credit-points-${index}`} size="small" variant="outlined"
-                                onChange={(e) => handleCourseChange(index, 'credit', e.target.value)} />
+                            <InputLabel id={`credit-points-label-${index}`} style={{ fontWeight: '500', color: 'black' }}>
+                                Credit Points
+                            </InputLabel>
+                            <TextField
+                                style={{ width: '100%' }}
+                                id={`credit-points-${index}`}
+                                size="small"
+                                variant="outlined"
+                                type="number"
+                                inputRef={creditInputRef}
+                                onChange={(e) => {
+                                    const newValue = e.target.value.replace(/[^0-9]/g, '');
+                                    handleCourseChange(index, 'credit', newValue);
+                                }}
+                            />
                         </Grid>
                         <Grid item xs={3}>
                             <InputLabel id={`grade-points-label-${index}`} style={{ fontWeight: '500', color: 'black' }}>Grade Points</InputLabel>
                             <TextField style={{ width: '100%' }} id={`grade-points-${index}`} size="small" variant="outlined"
-                                onChange={(e) => handleCourseChange(index, 'grade', e.target.value)} />
+                                type="number"
+                                inputRef={gradeInputRef}
+                                onChange={(e) => {
+                                    const newValue = e.target.value.replace(/[^0-9]/g, '');
+                                    handleCourseChange(index, 'grade', newValue);
+                                }}
+                            />
                         </Grid>
                     </Grid>
                 ))}

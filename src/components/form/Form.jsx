@@ -47,7 +47,7 @@ const Form = () => {
   const handleSubmit = async () => {
     console.log('Form submitted:', formData);
     try {
-      const response = await axios.post(`http://localhost:5000/api/students`, formData,{
+      const response = await axios.post(`https://kct-backend.onrender.com/api/students`, formData,{
         headers: {
             'Content-Type': 'application/json'
         }
