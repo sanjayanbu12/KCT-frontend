@@ -2,13 +2,23 @@ import React from 'react';
 import { Box, Grid, TextField, InputLabel } from '@mui/material';
 
 const StaffForm = ({ formData, setFormData }) => {
-  const handleInputChange = (field, value) => {
-    // Update the formData state with the new value for the specified field
-    setFormData((prevData) => ({
+
+
+const handleInputChange = (field, value) => {
+  let newValue = value || ''; // Set default value to an empty string if value is undefined
+  if (field === 'StaffName' || field === 'StaffGender' || field === 'StaffDepartment' || field === 'StaffDesignation') {
+      newValue = newValue.replace(/[^A-Za-z]/gi, '');
+  }
+  if (field === 'StaffPhoneNo') {
+      // Restrict input to numeric characters only for Phone Number and Age fields
+      newValue = newValue.replace(/\D/g, ''); // \D matches any non-digit character
+  }
+  setFormData((prevData) => ({
       ...prevData,
-      [field]: value
-    }));
-  };
+      [field]: newValue,
+  }));
+};
+
 
   return (
     <div style={{ margin: '2vw 2vw 2vw 0' }}>

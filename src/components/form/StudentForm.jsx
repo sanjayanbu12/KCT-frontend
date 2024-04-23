@@ -7,22 +7,31 @@ import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import { useState,useEffect } from 'react';
 
+
 const StudentForm = ({ formData, setFormData, onValidityChange }) => {
     const [isFormValid, setIsFormValid] = useState(false);
+
+
     useEffect(() => {
         validateForm();
     }, [formData]);
+
     const handleInputChange = (field, value) => {
-        console.log(field, value)
-      setFormData((prevData) => ({
-        ...prevData,
-        [field]: value,
-        // studentDetails: {
-        //   ...prevData?.studentDetails,
-        //   [field]: value
-        // }
-      }));
+        let newValue = value || ''; // Set default value to an empty string if value is undefined
+        if (field === 'name' || field === 'fathersname' || field === 'gender' || field === 'department') {
+            newValue = newValue.replace(/[^A-Za-z]/gi, '');
+        }
+        if (field === 'phoneNo' || field === 'age') {
+            // Restrict input to numeric characters only for Phone Number and Age fields
+            newValue = newValue.replace(/\D/g, ''); // \D matches any non-digit character
+        }
+        setFormData((prevData) => ({
+            ...prevData,
+            [field]: newValue,
+        }));
     };
+
+
     const validateForm = () => {
         const { name, rollno, fathersname, gender, email, department, phoneNo, age, dob, academicYear } = formData;
         const isValid = name && rollno && fathersname && gender && email && department && phoneNo && age && dob && academicYear;
