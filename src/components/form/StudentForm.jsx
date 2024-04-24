@@ -10,6 +10,7 @@ import { useState, useEffect } from 'react';
 
 const StudentForm = ({ formData, setFormData, onValidityChange }) => {
     const [isFormValid, setIsFormValid] = useState(false);
+    const [emailError, setEmailError] = useState('');
 
 
     useEffect(() => {
@@ -17,13 +18,20 @@ const StudentForm = ({ formData, setFormData, onValidityChange }) => {
     }, [formData]);
 
     const handleInputChange = (field, value) => {
-        let newValue = value || ''; // Set default value to an empty string if value is undefined
+        let newValue = value || ''; 
         if (field === 'name' || field === 'fathersname' || field === 'gender' || field === 'department') {
-            newValue = newValue.replace(/[^A-Za-z]/gi, '');
+            newValue = newValue.replace(/[^A-Za-z .]/gi, '');
         }
         if (field === 'phoneNo' || field === 'age') {
-            // Restrict input to numeric characters only for Phone Number and Age fields
-            newValue = newValue.replace(/\D/g, ''); // \D matches any non-digit character
+            newValue = newValue.replace(/\D/g, ''); 
+        }
+        if (field === 'email') {
+            newValue = newValue.trim(); // Remove leading and trailing spaces
+            if (newValue.endsWith('@gmail.com')) {
+                setEmailError(''); // Clear email error if valid
+            } else {
+                setEmailError('Use @gmail.com'); // Set email error
+            }
         }
         setFormData((prevData) => ({
             ...prevData,
@@ -89,6 +97,7 @@ const StudentForm = ({ formData, setFormData, onValidityChange }) => {
                             value={formData?.email || ''}
                             onChange={(e) => handleInputChange('email', e.target.value)}
                             style={{ width: '100%' }} id="outlined-basic" size="small" variant="outlined" />
+                              {emailError && <span style={{ color: 'red' }}>{emailError}</span>}
                     </Grid>
                     <Grid item xs={3}>
                         <InputLabel id="demo-simple-select-label" style={{ fontWeight: '500', color: 'black' }}>Department</InputLabel>

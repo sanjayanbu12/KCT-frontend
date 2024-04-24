@@ -1,18 +1,25 @@
-import React from 'react';
+import React,{ useState } from 'react';
 import { Box, Grid, TextField, InputLabel } from '@mui/material';
 
 const StaffForm = ({ formData, setFormData }) => {
-
+  const [emailError, setEmailError] = useState('');
 
 const handleInputChange = (field, value) => {
-  let newValue = value || ''; // Set default value to an empty string if value is undefined
+  let newValue = value || '';
   if (field === 'StaffName' || field === 'StaffGender' || field === 'StaffDepartment' || field === 'StaffDesignation') {
-      newValue = newValue.replace(/[^A-Za-z]/gi, '');
+      newValue = newValue.replace(/[^A-Za-z .]/gi, '');
   }
   if (field === 'StaffPhoneNo') {
-      // Restrict input to numeric characters only for Phone Number and Age fields
-      newValue = newValue.replace(/\D/g, ''); // \D matches any non-digit character
+      newValue = newValue.replace(/\D/g, '');
   }
+  if (field === 'email') {
+    newValue = newValue.trim(); // Remove leading and trailing spaces
+    if (newValue.endsWith('@gmail.com')) {
+        setEmailError(''); // Clear email error if valid
+    } else {
+        setEmailError('Use @gmail.com'); // Set email error
+    }
+}
   setFormData((prevData) => ({
       ...prevData,
       [field]: newValue,
@@ -60,6 +67,7 @@ const handleInputChange = (field, value) => {
               variant="outlined"
               size="small"
             />
+             {emailError && <span style={{ color: 'red' }}>{emailError}</span>}
           </Grid>
           <Grid item xs={3}>
             <InputLabel htmlFor="staff-department" style={{ fontWeight: '500', color: 'black' }}>Department</InputLabel>
