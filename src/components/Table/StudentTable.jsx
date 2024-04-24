@@ -25,6 +25,10 @@ const StudentTable = () => {
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [page, setPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
+  const [open, setOpen] = useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  }
   const rowsPerPage = 6;
 
   useEffect(() => {
@@ -41,6 +45,7 @@ const StudentTable = () => {
   };
 
   const handleViewDetails = (student) => {
+    setOpen(true);
     setSelectedStudent(student);
   };
 
@@ -186,7 +191,7 @@ const StudentTable = () => {
         onChange={(event, value) => setPage(value)}
         style={{ marginTop: '1rem' }}
       />
-      <DetailsModal student={selectedStudent} />
+      <DetailsModal open={open} handleClose={handleClose} student={selectedStudent} />
     </div>
   );
 };
