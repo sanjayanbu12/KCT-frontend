@@ -10,8 +10,10 @@ import {
   Paper, 
   Tooltip, 
   Pagination, 
-  InputBase,  // Import InputBase from Material-UI
-  IconButton  // Import IconButton from Material-UI
+  InputBase, 
+  Select,
+  MenuItem // Import InputBase from Material-UI
+  // Import IconButton from Material-UI
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
@@ -132,6 +134,20 @@ const StudentTable = () => {
 
   const startIndex = (page - 1) * rowsPerPage;
   const paginatedData = filteredData.slice(startIndex, startIndex + rowsPerPage);
+  const handleStatusUpdate = async (id, newStatus) => {
+    try {
+      await axios.put(`http://localhost:5000/api/updatestudent/${id}`, { Status: newStatus });
+      // Update the local details state after successful update
+      const updatedDetails = details.map((student) =>
+        student._id === id ? { ...student, Status: newStatus } : student
+      );
+      setDetails(updatedDetails);
+      Swal.fire('Updated!', 'The student status has been updated.', 'success');
+    } catch (error) {
+      console.log(error);
+      Swal.fire('Error!', 'Failed to update student status.', 'error');
+    }
+  };
 
   return (
     <div style={{ margin: '3vw 3vw 3vw 0' }}>
@@ -149,7 +165,7 @@ const StudentTable = () => {
           {/* </IconButton> */}
         </Paper>
       </div>
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper}> 
         <Table>
           <TableHead>
             <TableRow style={{ backgroundColor: '#D3D3D3' }}>
@@ -160,6 +176,7 @@ const StudentTable = () => {
               <TableCell>CGPA</TableCell>
               <TableCell>Class</TableCell>
               <TableCell>View</TableCell>
+              <TableCell>Status</TableCell>
               <TableCell>Action</TableCell>
             </TableRow>
           </TableHead>
@@ -175,6 +192,16 @@ const StudentTable = () => {
                 <TableCell onClick={() => handleViewDetails(data)} style={{ cursor: 'pointer' }}>
                   <RemoveRedEyeIcon />
                 </TableCell>
+                <TableCell>
+  <Select
+    value={data.Status || 'Pending'} // Display 'Pending' if data.Status is falsy
+    onChange={(e) => handleStatusUpdate(data._id, e.target.value)}
+  >
+    <MenuItem value="Pending">Pending</MenuItem>
+    <MenuItem value="Verify">Verify</MenuItem>
+    <MenuItem value="Reject">Reject</MenuItem>
+  </Select>
+</TableCell>
                 <TableCell>
                   <Tooltip title="Delete">
                     <DeleteIcon onClick={() => handleDelete(data._id)} style={{ cursor: 'pointer' }} />
