@@ -129,7 +129,7 @@ const StudentTable = () => {
   const paginatedData = filteredData.slice(startIndex, startIndex + rowsPerPage);
   const handleStatusUpdate = async (id, newStatus) => {
     try {
-      await axios.put(`http://localhost:5000/api/updatestudent/${id}`, { Status: newStatus });
+      await axios.put(`https://kct-backend.onrender.com/api/updatestudent/${id}`, { Status: newStatus });
       // Update the local details state after successful update
       const updatedDetails = details.map((student) =>
         student._id === id ? { ...student, Status: newStatus } : student
