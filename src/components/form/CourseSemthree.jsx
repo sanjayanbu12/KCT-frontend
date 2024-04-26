@@ -1,11 +1,28 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { Grid, Button } from '@mui/material';
+import { Grid, Button, Select, MenuItem } from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import styled from 'styled-components';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+
+
+const VisuallyHiddenInput = styled('input')({
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    height: 1,
+    overflow: 'hidden',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    whiteSpace: 'nowrap',
+    width: 1,
+});
 
 const CourseSemthree = (props) => {
-    const { formData, setFormData, onValidityChange } = props;
+    const { formData, setFormData, onValidityChange, marksheet3img , setMarksheet3img } = props;
+    const [marksheet3, setMarksheet3] = useState(null);
 
     const creditInputRef3 = useRef(null);
     const gradeInputRef3 = useRef(null);
@@ -37,15 +54,49 @@ const CourseSemthree = (props) => {
 
         onValidityChange(isValid);
     };
-
+    const handleChange = (event) => {
+        setMarksheet3(event.target.value);
+    };
+    const fileInputRef = useRef(null);
+    const onFileSelect = async (event) => {
+        const file = event.target.files[0];
+        setMarksheet3img(file);
+    }
     return (
         <div style={{ margin: '2vw 2vw 2vw 0' }}>
             <Box>
                 <Grid container spacing={2} style={{ marginBottom: '1vw' }}>
-                    <Grid item xs={3}>
+                    <Grid item xs={4}>
                         <InputLabel id="demo-simple-select-label" style={{ fontWeight: '500', color: 'black' }}> Semester</InputLabel>
                         <TextField style={{ width: '100%' }} id="outlined-disabled" disabled size="small" value="Semester 3" variant="outlined" />
                     </Grid>
+                    <Grid item xs={4}>
+                        <InputLabel id="demo-simple-select-label" style={{ fontWeight: '500', color: 'black' }}> mark sheet</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={marksheet3}
+                            onChange={handleChange}
+                            sx={{ width: '100%' }}
+                            size='small'
+                        >
+                            <MenuItem value="Recieved">Recieved</MenuItem>
+                            <MenuItem value="Not Recieved">Not Recieved</MenuItem>
+                        </Select>
+                    </Grid>
+                    {marksheet3 === 'Recieved' &&<Grid item xs={4}>
+                        <InputLabel id="demo-simple-select-label" style={{ fontWeight: '500', color: 'black' }}> Upload Marksheet</InputLabel>
+                        <Button
+                            component="label"
+                            role={undefined}
+                            variant="contained"
+                            tabIndex={-1}
+                            startIcon={marksheet3img ? <CheckCircleIcon /> : <CloudUploadIcon />}
+                        >
+                            {marksheet3img ? 'Marksheet Uploaded' : 'Upload Marksheet'}
+                            <VisuallyHiddenInput type="file" ref={fileInputRef} onChange={onFileSelect}/>
+                        </Button>
+                    </Grid>}
                 </Grid>
 
                 {formData.semesters[2].courses.map((course, index) => (

@@ -102,7 +102,7 @@ const DetailsModal = (props) => {
                             <Grid item style={{ display: 'flex', flexDirection: 'row',marginTop: '10px' }}>
                             {/* <Typography variant='h6' style={{ fontWeight: 'bold' }}>Name:&nbsp;</Typography> */}
                             {isEditing ? <TextField size="small" name="name" value={editedStudent ? editedStudent.name : ""} onChange={handleInputChange} /> :
-                                <Typography variant='h6' style={{ fontWeight: 'bold',fontSize: '24px' }}>{student ? student.name : "Name"}</Typography>}
+                                <Typography variant='h6' style={{ fontWeight: 'bold',fontSize: '24px',marginLeft: '30px' }}>{student ? student.name : "Name"}</Typography>}
                         </Grid>
                         </Grid>
                         <Grid item style={{ display: 'flex', flexDirection: 'column' }}>

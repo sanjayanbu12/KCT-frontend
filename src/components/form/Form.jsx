@@ -10,6 +10,11 @@ import CourseSemthree from './CourseSemthree';
 const steps = ['Student Details', 'Sem 1 Course Details', 'Sem 2 Course Details', 'Sem 3 Course Details', 'Staff Details'];
 
 const Form = () => {
+  const [avatarimg, setAvatarimg] = useState(null);
+  const [marksheet1img, setMarksheet1img] = useState(null);
+  const [marksheet2img, setMarksheet2img] = useState(null);
+  const [marksheet3img, setMarksheet3img] = useState(null);
+
   const [formData, setFormData] = useState({
     semesters: [
       {
@@ -44,25 +49,74 @@ const Form = () => {
   const handleBack = () => {
     setActiveStep((prevStep) => prevStep - 1);
   };
-
   const handleSubmit = async () => {
-    setLoading(true); // Set loading to true when submitting
-    try {
-      const response = await axios.post(`https://kct-backend.onrender.com/api/students`, formData, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      setFormData({ semesters: [] });
-      console.log(response)
-      setFormSubmitted(true);
-    } catch (error) {
-      console.log(error)
-    } finally {
-      setLoading(false); // Reset loading state whether success or failure
-    }
-  };
+    try { 
+        const formDataToSend = new FormData();
 
+        // Convert formData object to FormData
+        Object.entries(formData).forEach(([key, value]) => {
+            if (key === 'semesters') {
+                // Ensure each semester has 'courses' array
+                const formattedSemesters = value.map(semester => ({
+                    ...semester,
+                    courses: semester.courses || [] // Ensure 'courses' exists and is an array
+                }));
+                // Convert semesters array to JSON string
+                formDataToSend.append(key, JSON.stringify(formattedSemesters));
+            } else {
+                // Append other form fields directly
+                formDataToSend.append(key, value);
+            }
+        });
+
+        // Append avatarimg to FormData if it exists
+        if (avatarimg) {
+            formDataToSend.append('profilePictureUrl', avatarimg);
+        }
+        if(marksheet1img){
+            formDataToSend.append('sem1FileUrl', marksheet1img);
+        }
+        if(marksheet2img){
+            formDataToSend.append('sem2FileUrl', marksheet2img);
+        }
+        if(marksheet3img){
+            formDataToSend.append('sem3FileUrl', marksheet3img);
+        }
+
+        const response = await axios.post(`http://localhost:5000/api/students`, formDataToSend, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+
+        setFormData({semesters: []});
+        console.log(response);
+        setFormSubmitted(true);
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+  
+
+
+  // const handleSubmit = async () => {
+  //   console.log('Form submitted:', formData);
+  //   try { 
+  
+  //     const response = await axios.post(`http://localhost:5000/api/students`, formData,{
+  //       headers: {
+  //           'Content-Type': 'application/json'
+  //       }
+  //   });
+  //   setFormData({semesters: []});
+  //     console.log(response)
+  //     setFormSubmitted(true);
+  //   }
+  //   catch (error) {
+  //     console.log(error)
+  //   }
+  // };
   useEffect(() => {
     if (formSubmitted) {
       // Redirect to /table after form submission
@@ -76,13 +130,13 @@ const Form = () => {
   const getStepContent = (step) => {
     switch (step) {
       case 0:
-        return <StudentForm formData={formData} setFormData={setFormData} onValidityChange={handleStudentFormChange} />;
+        return <StudentForm avatarimg={avatarimg} setAvatarimg={setAvatarimg} formData={formData} setFormData={setFormData} onValidityChange={handleStudentFormChange} />;
       case 1:
-        return <CourseForm formData={formData} setFormData={setFormData} onValidityChange={handleStudentFormChange} semester="sem1" />;
+        return <CourseForm marksheet1img={marksheet1img} setMarksheet1img={setMarksheet1img} formData={formData} setFormData={setFormData} onValidityChange={handleStudentFormChange} semester="sem1" />;
       case 2:
-        return <CourseSemtwo formData={formData} setFormData={setFormData} onValidityChange={handleStudentFormChange} semester="sem2" />;
+        return <CourseSemtwo marksheet2img={marksheet2img} setMarksheet2img={setMarksheet2img} formData={formData} setFormData={setFormData} onValidityChange={handleStudentFormChange} semester="sem2" />;
       case 3:
-        return <CourseSemthree formData={formData} setFormData={setFormData} onValidityChange={handleStudentFormChange} semester="sem3" />;
+        return <CourseSemthree marksheet3img={marksheet3img} setMarksheet3img={setMarksheet3img} formData={formData} setFormData={setFormData} onValidityChange={handleStudentFormChange} semester="sem3" />;
       case 4:
         return <StaffForm formData={formData} setFormData={setFormData}  onValidityChange={handleStudentFormChange}/>;
       default:

@@ -1,12 +1,28 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { Grid, Button } from '@mui/material';
+import { Grid, Button, Select, MenuItem } from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
+import styled from 'styled-components';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+
+const VisuallyHiddenInput = styled('input')({
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    height: 1,
+    overflow: 'hidden',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    whiteSpace: 'nowrap',
+    width: 1,
+});
 
 const CourseForm = (props) => {
     const [isFormValid, setIsFormValid] = useState(false);
-    const { formData, setFormData, onValidityChange } = props;
+    const { formData, setFormData, onValidityChange, marksheet1img ,setMarksheet1img } = props;
+    const [marksheet1, setMarksheet1] = useState(null);
 
     const creditInputRef = useRef(null);
     const gradeInputRef = useRef(null);
@@ -27,6 +43,10 @@ const CourseForm = (props) => {
         validateForm();
     }, [formData]);
 
+    const handleChange = (event) => {
+        setMarksheet1(event.target.value);
+    };
+
     const validateForm = () => {
         // Check if all courses in semester 1 have required fields filled
         const isSemesterCoursesValid = formData.semesters[0].courses.every(course => {
@@ -40,16 +60,50 @@ const CourseForm = (props) => {
         onValidityChange(isValid);
     };
 
+    const fileInputRef = useRef(null);
+    const onFileSelect = async (event) => {
+        const file = event.target.files[0];
+        setMarksheet1img(file);
+        console.log(file,"file");
+    }
 
     return (
         <div style={{ margin: '2vw 2vw 2vw 0' }}>
             <Box>
                 <Grid container spacing={2} style={{ marginBottom: '1vw' }}>
-                    <Grid item xs={3}>
+                    <Grid item xs={4}>
                         <InputLabel id="demo-simple-select-label" style={{ fontWeight: '500', color: 'black' }}> Semester</InputLabel>
                         <TextField style={{ width: '100%' }} id="outlined-disabled" disabled size="small" value="Semester 1" variant="outlined" />
                     </Grid>
+                    <Grid item xs={4}>
+                        <InputLabel id="demo-simple-select-label" style={{ fontWeight: '500', color: 'black' }}> mark sheet</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={marksheet1}
+                            onChange={handleChange}
+                            sx={{ width: '100%' }}
+                            size='small'
+                        >
+                            <MenuItem value="Recieved">Recieved</MenuItem>
+                            <MenuItem value="Not Recieved">Not Recieved</MenuItem>
+                        </Select>
+                    </Grid>
+                    {marksheet1 === 'Recieved' &&<Grid item xs={4}>
+                        <InputLabel id="demo-simple-select-label" style={{ fontWeight: '500', color: 'black' }}> Upload Marksheet</InputLabel>
+                        <Button
+                            component="label"
+                            role={undefined}
+                            variant="contained"
+                            tabIndex={-1}
+                            startIcon={marksheet1img ? <CheckCircleIcon /> : <CloudUploadIcon />}
+                        >
+                            {marksheet1img ? 'Marksheet Uploaded' : 'Upload Marksheet'}
+                            <VisuallyHiddenInput type="file" ref={fileInputRef} onChange={onFileSelect}/>
+                        </Button>
+                    </Grid>}
                 </Grid>
+
 
                 {formData.semesters[0].courses.map((course, index) => (
                     <Grid container spacing={2} style={{ marginBottom: '1vw' }} key={index}>

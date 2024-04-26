@@ -1,16 +1,18 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { Grid } from '@mui/material';
+import { Grid, IconButton } from '@mui/material';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import { useState, useEffect } from 'react';
+import AvatarImage from './AvatarImage';
 
 
-const StudentForm = ({ formData, setFormData, onValidityChange }) => {
+const StudentForm = ({ formData, setFormData, onValidityChange , avatarimg, setAvatarimg }) => {
     const [isFormValid, setIsFormValid] = useState(false);
     const [emailError, setEmailError] = useState('');
+    const [image, setImage] = useState(null);
 
 
     useEffect(() => {
@@ -46,15 +48,48 @@ const StudentForm = ({ formData, setFormData, onValidityChange }) => {
         setIsFormValid(isValid);
         onValidityChange(isValid);
     };
+    const fileInputRef = useRef(null);
+  const selectfiles = () => {
+    fileInputRef.current.click();
+}
 
+const onFileSelect = async (event) => {
+    const file = event.target.files[0];
+    setAvatarimg(file);
+    console.log(file);
+    const reader = new FileReader();
+    
+    reader.onload = () => {
+        setImage(reader.result);
+    };
+    
+    if (file) {
+        reader.readAsDataURL(file);
+    }
+};
 
     return (
         <div style={{ margin: '2vw 2vw 2vw 0' }}>
             <div>
                 <h3>Student Details</h3>
             </div>
-            <Box>
+            <Box sx={{}}>
                 <Grid container spacing={2} style={{ marginBottom: '3vw' }}>
+                    <Grid item xs={3}>
+                    <IconButton
+              color="primary"
+              aria-label="upload picture"
+              component="span"
+             onClick={selectfiles}
+            >
+              <input style={{ display: "none" }} type="file" ref={fileInputRef} onChange={onFileSelect} ></input>
+              <AvatarImage
+                src={image}
+                className={".crop-container"}
+                
+              />
+            </IconButton>
+                    </Grid>
                     <Grid item xs={3}>
                         <InputLabel id="demo-simple-select-label" style={{ fontWeight: '500', color: 'black' }}>Name</InputLabel>
                         <TextField
@@ -87,9 +122,7 @@ const StudentForm = ({ formData, setFormData, onValidityChange }) => {
                             onChange={(e) => handleInputChange('gender', e.target.value)}
                             style={{ width: '100%' }} id="outlined-basic" size="small" variant="outlined" />
                     </Grid>
-                </Grid>
-
-                <Grid container spacing={2} style={{ marginBottom: '3vw' }}>
+               
                     <Grid item xs={3}>
                         <InputLabel id="demo-simple-select-label" style={{ fontWeight: '500', color: 'black' }}>Email</InputLabel>
 
@@ -124,9 +157,6 @@ const StudentForm = ({ formData, setFormData, onValidityChange }) => {
                             onChange={(e) => handleInputChange('age', e.target.value)}
                             style={{ width: '100%' }} id="outlined-basic" size="small" variant="outlined" />
                     </Grid>
-                </Grid>
-
-                <Grid container spacing={2} style={{ marginBottom: '3vw' }}>
                     <Grid item xs={3}>
                         <InputLabel id="demo-simple-select-label" style={{ fontWeight: '500', color: 'black' }}>Date of Birth</InputLabel>
                         <TextField
