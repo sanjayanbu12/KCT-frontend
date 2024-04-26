@@ -4,12 +4,13 @@ import './Dashboard.css';
 import HomeIcon from '@mui/icons-material/Home';
 import ContactEmergencyIcon from '@mui/icons-material/ContactEmergency';
 import TableChartIcon from '@mui/icons-material/TableChart';
+import LogoutIcon from '@mui/icons-material/Logout';
 const Dashboard = () => {
   return (
 
     <div id="nav-bar">
       <input id="nav-toggle" type="checkbox" />
-      <div id="nav-header"><a id="nav-title">SVKCOT<i class="fab fa-codepen"></i></a>
+      <div id="nav-header"><a id="nav-title">KCT<i class="fab fa-codepen"></i></a>
         {/* <label for="nav-toggle"><span id="nav-toggle-burger"></span></label> */}
         <hr />
       </div>
@@ -25,9 +26,15 @@ const Dashboard = () => {
         <div id="nav-footer-heading">
           <div id="nav-footer-avatar"><img src="https://gravatar.com/avatar/4474ca42d303761c2901fa819c4f2547" /></div>
           <div id="nav-footer-titlebox"><a id="nav-footer-title">Keerthana</a><span id="nav-footer-subtitle">Admin</span></div>
-          <label for="nav-footer-toggle"><i class="fas fa-caret-up"></i></label>
+         
+          <div className="logout">
+            
+          <Link to="/"><LogoutIcon/></Link>
+            </div>
         </div>
-        <div id="nav-footer-content">
+        
+        <div >
+          
         </div>
       </div>
 

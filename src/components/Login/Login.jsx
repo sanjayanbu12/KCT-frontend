@@ -30,7 +30,7 @@ const Login = () => {
             <div className="panels">
                 <div className="signin">
                     <div className="main">
-                        <h1>Login to SVKCOT</h1>
+                        <h1>Login to KCT</h1>
                         {/* <h2 style={{ marginBottom: "20px" }}>Kumarasamy College</h2> */}
                         <h4 style={{ marginBottom: "20px" }}>Enter your login credentials</h4>
                         <form onSubmit={handleSubmit}>

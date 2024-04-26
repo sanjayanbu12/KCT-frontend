@@ -55,27 +55,17 @@ const StudentTable = () => {
   };
 
   const handleDelete = async (id) => {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: 'You will not be able to recover this student!',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Delete',
-      cancelButtonText: 'Cancel',
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        try {
-          await axios.delete(`https://kct-backend.onrender.com/api/delete-student/${id}`);
-          Swal.fire('Deleted!', 'The student has been deleted.', 'success');
-          getDetails();
-        } catch (error) {
-          console.log(error);
-          Swal.fire('Error!', 'Failed to delete student.', 'error');
-        }
+    const confirmed = window.confirm('Are you sure? You will not be able to recover this student!');
+    if (confirmed) {
+      try {
+        await axios.delete(`https://kct-backend.onrender.com/api/delete-student/${id}`);
+        alert('The student has been deleted.');
+        getDetails();
+      } catch (error) {
+        console.log(error);
+        alert('Failed to delete student.');
       }
-    });
+    }
   };
 
   const getClassCircle = (studentClass) => {
@@ -145,12 +135,12 @@ const StudentTable = () => {
         student._id === id ? { ...student, Status: newStatus } : student
       );
       setDetails(updatedDetails);
-      Swal.fire('Updated!', 'The student status has been updated.', 'success');
+      alert('The student status has been updated.');
     } catch (error) {
       console.log(error);
-      Swal.fire('Error!', 'Failed to update student status.', 'error');
+      alert('Failed to update student status.');
     }
-  };
+  };  
 
   return (
     <div>
