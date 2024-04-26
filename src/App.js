@@ -15,7 +15,7 @@ function App() {
       </Routes>
       <Stack>
         <Grid container>
-          <Grid item xs={3}>
+          <Grid item xs={3}> 
             <Dashboard />
           </Grid>
           <Grid item xs={9}>
@@ -23,6 +23,7 @@ function App() {
               <Route path="/home" element={<Home />} />
               <Route path="/form" element={<Form />} />
               <Route path="/table" element={<StudentTable />} />
+              
             </Routes>
           </Grid>
         </Grid>

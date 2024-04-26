@@ -12,12 +12,12 @@ const handleInputChange = (field, value) => {
   if (field === 'StaffPhoneNo') {
       newValue = newValue.replace(/\D/g, '');
   }
-  if (field === 'email') {
-    newValue = newValue.trim(); // Remove leading and trailing spaces
+  if (field === 'StaffEmail') {
+    newValue = newValue.trim(); 
     if (newValue.endsWith('@gmail.com')) {
-        setEmailError(''); // Clear email error if valid
+        setEmailError(''); 
     } else {
-        setEmailError('Use @gmail.com'); // Set email error
+        setEmailError('Use @gmail.com'); 
     }
 }
   setFormData((prevData) => ({

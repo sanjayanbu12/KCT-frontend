@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react';
-import { Box, Stepper, Step, StepLabel, Button } from '@mui/material';
+import { Box, Stepper, Step, StepLabel, Button,CircularProgress } from '@mui/material';
 import StudentForm from './StudentForm';
 import CourseForm from './CourseForm';
 import StaffForm from './StaffForm';
@@ -35,6 +35,7 @@ const Form = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isStudentFormValid, setIsStudentFormValid] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleNext = () => {
     setActiveStep((prevStep) => prevStep + 1);
@@ -45,21 +46,23 @@ const Form = () => {
   };
 
   const handleSubmit = async () => {
-    console.log('Form submitted:', formData);
+    setLoading(true); // Set loading to true when submitting
     try {
-      const response = await axios.post(`https://kct-backend.onrender.com/api/students`, formData,{
+      const response = await axios.post(`https://kct-backend.onrender.com/api/students`, formData, {
         headers: {
-            'Content-Type': 'application/json'
+          'Content-Type': 'application/json'
         }
-    });
-    setFormData({semesters: []});
+      });
+      setFormData({ semesters: [] });
       console.log(response)
       setFormSubmitted(true);
-    }
-    catch (error) {
+    } catch (error) {
       console.log(error)
+    } finally {
+      setLoading(false); // Reset loading state whether success or failure
     }
   };
+
   useEffect(() => {
     if (formSubmitted) {
       // Redirect to /table after form submission
@@ -105,7 +108,7 @@ const Form = () => {
             </Button>
             {activeStep === steps.length - 1 ? (
               <Button variant="contained" color="primary" onClick={handleSubmit} sx={{ width: '10%', backgroundColor: '#2c3e50', '&:hover': { backgroundColor: '#2c3e50' } }} disabled={!isStudentFormValid}>
-                Submit
+               {loading ? <><CircularProgress size={20} sx={{ color: '#ffff' }} /></> : "Submit"}
               </Button>
             ) : (
               <Button variant="contained" color="primary" onClick={handleNext} sx={{ width: '10%', backgroundColor: '#2c3e50', '&:hover': { backgroundColor: '#2c3e50' } }} disabled={!isStudentFormValid}>

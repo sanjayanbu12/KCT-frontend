@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { 
-  Table, 
-  TableContainer, 
-  TableHead, 
-  TableRow, 
-  TableCell, 
-  TableBody, 
-  Paper, 
-  Tooltip, 
-  Pagination, 
-  InputBase, 
+import {
+  Table,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  Paper,
+  Tooltip,
+  Pagination,
+  InputBase,
   Select,
-  MenuItem // Import InputBase from Material-UI
+  MenuItem,
+  CircularProgress // Import InputBase from Material-UI
   // Import IconButton from Material-UI
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -28,6 +29,7 @@ const StudentTable = () => {
   const [page, setPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
   const handleClose = () => {
     setOpen(false);
   }
@@ -41,6 +43,7 @@ const StudentTable = () => {
     try {
       const response = await axios.get(`https://kct-backend.onrender.com/api/getallstudents`);
       setDetails(response.data);
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -150,10 +153,17 @@ const StudentTable = () => {
   };
 
   return (
+    <div>
+
+{loading ? ( // Render loader when loading state is true
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+          <CircularProgress /> {/* Using CircularProgress as loader */}
+        </div>
+      ) : (
     <div style={{ margin: '3vw 3vw 3vw 0' }}>
-      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem',justifyContent:'space-between' }}>
+      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem', justifyContent: 'space-between' }}>
         <h3 style={{ marginRight: '1rem' }}>Student Table</h3>
-        <Paper component="form" elevation={3} style={{ padding: '4px 8px', display: 'flex', alignItems: 'center',justifyContent:'space-between' }}>
+        <Paper component="form" elevation={3} style={{ padding: '4px 8px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <InputBase
             placeholder="Search..."
             value={searchQuery}
@@ -161,11 +171,11 @@ const StudentTable = () => {
             style={{ flex: 1 }}
           />
           {/* <IconButton type="submit" aria-label="search"> */}
-            <SearchIcon sx={{ mr:'10px' }} />
+          <SearchIcon sx={{ mr: '10px' }} />
           {/* </IconButton> */}
         </Paper>
       </div>
-      <TableContainer component={Paper}> 
+      <TableContainer component={Paper}>
         <Table>
           <TableHead>
             <TableRow style={{ backgroundColor: '#D3D3D3' }}>
@@ -193,15 +203,15 @@ const StudentTable = () => {
                   <RemoveRedEyeIcon />
                 </TableCell>
                 <TableCell>
-  <Select
-    value={data.Status || 'Pending'} // Display 'Pending' if data.Status is falsy
-    onChange={(e) => handleStatusUpdate(data._id, e.target.value)}
-  >
-    <MenuItem value="Pending">Pending</MenuItem>
-    <MenuItem value="Verify">Verify</MenuItem>
-    <MenuItem value="Reject">Reject</MenuItem>
-  </Select>
-</TableCell>
+                  <Select
+                    value={data.Status || 'Pending'} // Display 'Pending' if data.Status is falsy
+                    onChange={(e) => handleStatusUpdate(data._id, e.target.value)}
+                  >
+                    <MenuItem value="Pending">Pending</MenuItem>
+                    <MenuItem value="Verify">Verify</MenuItem>
+                    <MenuItem value="Reject">Reject</MenuItem>
+                  </Select>
+                </TableCell>
                 <TableCell>
                   <Tooltip title="Delete">
                     <DeleteIcon onClick={() => handleDelete(data._id)} style={{ cursor: 'pointer' }} />
@@ -220,7 +230,10 @@ const StudentTable = () => {
       />
       <DetailsModal open={open} handleClose={handleClose} student={selectedStudent} />
     </div>
+      )}
+    </div>
   );
+  
 };
 
 export default StudentTable;
