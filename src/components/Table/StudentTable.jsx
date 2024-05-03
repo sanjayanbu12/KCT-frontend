@@ -41,7 +41,7 @@ const StudentTable = () => {
 
   const getDetails = async () => {
     try {
-      const response = await axios.get(`https://kct-backend.onrender.com/api/getallstudents`);
+      const response = await axios.get(`http://localhost:5000/api/getallstudents`);
       setDetails(response.data);
       setLoading(false);
     } catch (error) {
@@ -58,7 +58,7 @@ const StudentTable = () => {
     const confirmed = window.confirm('Are you sure? You will not be able to recover this student!');
     if (confirmed) {
       try {
-        await axios.delete(`https://kct-backend.onrender.com/api/delete-student/${id}`);
+        await axios.delete(`http://localhost:5000/api/delete-student/${id}`);
         alert('The student has been deleted.');
         getDetails();
       } catch (error) {
@@ -129,7 +129,7 @@ const StudentTable = () => {
   const paginatedData = filteredData.slice(startIndex, startIndex + rowsPerPage);
   const handleStatusUpdate = async (id, newStatus) => {
     try {
-      await axios.put(`https://kct-backend.onrender.com/api/updatestudent/${id}`, { Status: newStatus });
+      await axios.put(`http://localhost:5000/api/updatestudent/${id}`, { Status: newStatus });
       // Update the local details state after successful update
       const updatedDetails = details.map((student) =>
         student._id === id ? { ...student, Status: newStatus } : student

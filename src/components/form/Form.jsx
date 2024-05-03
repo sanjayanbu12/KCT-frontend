@@ -83,7 +83,7 @@ const Form = () => {
             formDataToSend.append('sem3FileUrl', marksheet3img);
         }
 
-        const response = await axios.post(`https://kct-backend.onrender.com/api/students`, formDataToSend, {
+        const response = await axios.post(`http://localhost:5000/api/students`, formDataToSend, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
@@ -104,7 +104,7 @@ const Form = () => {
   //   console.log('Form submitted:', formData);
   //   try { 
   
-  //     const response = await axios.post(`https://kct-backend.onrender.com/api/students`, formData,{
+  //     const response = await axios.post(`http://localhost:5000/api/students`, formData,{
   //       headers: {
   //           'Content-Type': 'application/json'
   //       }

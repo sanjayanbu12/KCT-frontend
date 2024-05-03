@@ -58,7 +58,7 @@ const DetailsModal = (props) => {
 
     const handleUpdateClick = () => {
         console.log('Updated student data:', editedStudent);
-        fetch(`https://kct-backend.onrender.com/api/updatestudent/${student._id}`, {
+        fetch(`http://localhost:5000/api/updatestudent/${student._id}`, {
             method: 'PUT',
             body: JSON.stringify(editedStudent),
             headers: {
